@@ -1,0 +1,59 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="fragment/head :: head"> <head/>
+<body>
+<div th:insert="fragment/navbefore :: navbefore"></div>
+<div class="container  pt-3">
+    <div class="row ml-4">
+        <div class="card" style="width: 500px">
+            <div class="card-header">
+                Создать новый профиль
+            </div>
+            <div class="card-body">
+                <div style="color:#ff0000;" th:if="${param.password}">
+                    <div th:text="${errorMessage}"></div>
+                </div>
+                <div style="color:#ff0000;" th:if="${param.account}">
+                    <div th:text="${errorMessage}"></div>
+                </div>
+                <form th:action="@{/registration}" method="POST" th:object="${user}">
+                    <div class="form-group">
+                        <label>Ваше имя</label>
+                        <input type="text" class="form-control" name="username" th:field="*{username}">
+                        <span style="color:#ff0000;"
+                              th:if="${#fields.hasErrors('username')}"
+                              th:errors="*{username}">UserName Error</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Почта (аккаунт)</label>
+                        <input type="email" class="form-control" name="email" th:field="*{email}">
+                        <span style="color:#ff0000;"
+                              th:if="${#fields.hasErrors('email')}"
+                              th:errors="*{email}">Email Error</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" class="form-control" name="password" th:field="*{password}">
+                        <span style="color:#ff0000;"
+                              th:if="${#fields.hasErrors('password')}"
+                              th:errors="*{password}">Password Error</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Повторите пароль</label>
+                        <input type="password" class="form-control" name="repassword">
+                    </div>
+                    <div class="form-group">
+                        <label>Телефонный номер</label>
+                        <input type="text" class="form-control" name="phone"  th:field="*{phone}">
+                        <span style="color:#ff0000;"
+                              th:if="${#fields.hasErrors('phone')}"
+                              th:errors="*{phone}">Phone Error</span>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Продолжить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

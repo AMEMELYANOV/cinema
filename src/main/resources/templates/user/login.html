@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="fragment/head :: head"> <head/>
+<body>
+<div th:insert="fragment/navbefore :: navbefore"></div>
+<div class="container  pt-3">
+    <div class="row ml-4">
+        <div class="card" style="width: 500px">
+            <div class="card-header">
+                Войти
+            </div>
+            <div class="card-body">
+                <div style="color:#ff0000;" th:if="${param.error}">
+                    <div th:text = "${errorMessage}"></div>
+                </div>
+                <div style="color:#ff0000;" th:if="${param.logout}">
+                    <div th:text = "${errorMessage}"></div>
+                </div>
+                <form th:action="@{/login}" method="POST">
+                    <div class="form-group">
+                        <label>Адрес электронной почты</label>
+                        <input type="email" class="form-control" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" class="form-control" name="password">
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Продолжить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

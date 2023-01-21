@@ -1,0 +1,28 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<div class="card-body" th:fragment="showForm">
+    <form th:action="@{/saveShow}" th:object="${show}" method="post" enctype="multipart/form-data">
+        <table class="table">
+            <input type="hidden" name="id" th:field="*{id}"/>
+            <input type="hidden" name="filename" th:field="*{posterName}"/>
+            <tr>
+                <td>Наименование :</td>
+                <td><input class="form-control" type="text" th:field="*{name}" name="name" required/></td>
+            </tr>
+            <tr>
+                <td>Описание :</td>
+                <td><textarea class="form-control" th:field="*{description}" rows="8" maxlength="400"
+                              name="description"
+                              placeholder="Не больше 400 символов" required></textarea></td>
+            </tr>
+            <tr>
+                <td> Загрузить постер :</td>
+                <td><input type="file" size="32" name="file"/></td>
+            </tr>
+            <tr>
+                <td><input type="submit" class="btn btn-secondary" value="Сохранить"/>
+            </tr>
+        </table>
+    </form>
+</div>
+</html>
