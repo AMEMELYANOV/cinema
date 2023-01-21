@@ -1,0 +1,16 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="fragment/head :: head"> <head/>
+<body>
+<div th:insert="fragment/navlogin :: navlogin"></div>
+<div class="container mt-3">
+    <div class="card" style="width: 100%">
+        <div class="card-header">
+            Добавить сеанс
+        </div>
+        <div th:insert="fragment/showForm :: showForm"></div>
+    </div>
+</div>
+</div>
+</body>
+</html>

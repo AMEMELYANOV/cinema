@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="fragment/head :: head"> <head/>
+<body>
+<div th:insert="fragment/navlogin :: navlogin"></div>
+<div class="container mt-3">
+    <div class="card" style="width: 100%">
+        <div class="card-header">
+            Список фильмов
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Наименование сеанса</th>
+                    <th scope="col">Удаление билетов</th>
+                    <th scope="col">Удаление</th>
+                    <th scope="col">Редактирование</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="show: ${shows}">
+                    <td th:text="${show.id}"/>
+                    <td th:text="${show.name}"/>
+                    <td>
+                        <form th:action="@{/clearTickets}" method="POST">
+                            <input type="hidden" name="showId" th:value="${show.id}"/>
+                            <button type="submit" class="btn btn-secondary">Очистить билеты</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/deleteShow}" method="POST">
+                            <input type="hidden" name="showId" th:value="${show.id}"/>
+                            <button type="submit" class="btn btn-secondary">Удалить</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/editShow}" method="POST">
+                            <input type="hidden" name="showId" th:value="${show.id}"/>
+                            <button type="submit" class="btn btn-secondary">Редактировать</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</body>
+</html>
