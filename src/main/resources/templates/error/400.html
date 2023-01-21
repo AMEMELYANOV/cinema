@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="fragment/head :: head"> <head/>
+<body>
+<div th:insert="fragment/navlogin :: navlogin"></div>
+<div class="container">
+    <div class="card" style="width: 100%">
+        <div class="card-header">
+            <span style="color:#ff0000;font-weight: bold;">Произошла ошибка (400 Bad Request), некорректный запрос</span>
+        </div>
+        <div class="card-body">
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="card-header">
+    </div>
+    <div class="card" style="width: 100%">
+        <div class="card-body justify-content-right ml-3">
+            <div class="col">
+                <div class="row"><span style="color:#ff0000;font-weight: bold;" th:text="${errorMessage}"></span></div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-2">
+                    <div th:if="${session.show} != null">
+                        <form th:action="@{/showRow}" method="POST">
+                            <input type="hidden" name="showId" th:value="${session.show.id}"/>
+                            <button type="submit" class="btn btn-secondary" style="width:180px">К киносеансу</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-2 ml-3">
+                    <div th:if="${session.show} != null">
+                        <form th:action="@{/cancelBuyTicket}" method="POST">
+                            <button type="submit" class="btn btn-secondary" style="width:180px">К списку сеансов
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

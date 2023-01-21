@@ -1,0 +1,35 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:insert="fragment/head :: head"> <head/>
+<body>
+<div th:insert="fragment/navlogin :: navlogin"></div>
+<div class="container mt-3">
+    <div class="card" style="width: 100%">
+        <div class="card-header">
+            Список фильмов
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                <div class="row mb-3" th:each="show: ${shows}">
+                    <div class="col-3 mb-3"><img class="img-thumbnail" th:if="*{filename} != ''"
+                                                 th:src="@{/img/{filename}(filename = ${show.posterName})}"></div>
+                    <div class="col-3">
+                        <div class="mb-3 row h5 font-weight-bold" th:text="${show.name}"></div>
+                        <div class="row mt-20">
+                            <div class="col-2">
+                                <form th:action="@{/showRow}" method="POST">
+                                    <input type="hidden" name="showId" th:value="${show.id}"/>
+                                    <button type="submit" class="btn btn-secondary">Купить</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 text-justify" th:text="${show.description}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>
