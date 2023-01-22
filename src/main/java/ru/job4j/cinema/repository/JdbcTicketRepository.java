@@ -1,5 +1,6 @@
 package ru.job4j.cinema.repository;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.Show;
@@ -22,8 +23,9 @@ import java.util.Optional;
  * @version 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @Repository
-public class PostgresTicketRepository implements TicketRepository {
+public class JdbcTicketRepository implements TicketRepository {
 
     /**
      * SQL запрос по выбору всех билетов из таблицы tickets, при выполнении
@@ -97,16 +99,7 @@ public class PostgresTicketRepository implements TicketRepository {
     /**
      * Объект для выполнения подключения к базе данных приложения
      */
-    private final DataSource pool;
-
-    /**
-     * Конструктор класса.
-     *
-     * @param dataSource объект для выполнения подключения к базе данных приложения
-     */
-    public PostgresTicketRepository(DataSource dataSource) {
-        this.pool = dataSource;
-    }
+    private final DataSource dataSource;
 
     /**
      * Возвращает список всех билетов
@@ -116,7 +109,7 @@ public class PostgresTicketRepository implements TicketRepository {
     @Override
     public List<Ticket> findAll() {
         List<Ticket> tickets = new ArrayList<>();
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_ALL_SELECT)
         ) {
             try (ResultSet it = ps.executeQuery()) {
@@ -125,7 +118,7 @@ public class PostgresTicketRepository implements TicketRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе findAll() класса PostgresTicketRepository ", e);
+            log.info("Исключение в методе findAll() класса JdbcTicketRepository ", e);
         }
         return tickets;
     }
@@ -139,7 +132,7 @@ public class PostgresTicketRepository implements TicketRepository {
      */
     @Override
     public Optional<Ticket> findById(int id) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_TICKET_ID_SELECT)
         ) {
             ps.setInt(1, id);
@@ -149,7 +142,7 @@ public class PostgresTicketRepository implements TicketRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе findById() класса PostgresTicketRepository ", e);
+            log.info("Исключение в методе findById() класса JdbcTicketRepository ", e);
         }
         return Optional.empty();
     }
@@ -165,7 +158,7 @@ public class PostgresTicketRepository implements TicketRepository {
      */
     @Override
     public Optional<Ticket> save(Ticket ticket) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(INSERT_INTO,
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
@@ -181,7 +174,7 @@ public class PostgresTicketRepository implements TicketRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе save() класса PostgresTicketRepository ", e);
+            log.info("Исключение в методе save() класса JdbcTicketRepository ", e);
         }
         return Optional.empty();
     }
@@ -195,7 +188,7 @@ public class PostgresTicketRepository implements TicketRepository {
     @Override
     public boolean update(Ticket ticket) {
         boolean result = false;
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(UPDATE)
         ) {
             ps.setInt(1, ticket.getShow().getId());
@@ -205,7 +198,7 @@ public class PostgresTicketRepository implements TicketRepository {
             ps.setInt(5, ticket.getId());
             result = ps.executeUpdate() > 0;
         } catch (Exception e) {
-            log.info("Исключение в методе update() класса PostgresTicketRepository ", e);
+            log.info("Исключение в методе update() класса JdbcTicketRepository ", e);
         }
         return result;
     }
@@ -219,7 +212,7 @@ public class PostgresTicketRepository implements TicketRepository {
      */
     @Override
     public boolean deleteById(int id) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(DELETE_BY_TICKET_ID)
         ) {
             ps.setInt(1, id);
@@ -228,7 +221,7 @@ public class PostgresTicketRepository implements TicketRepository {
                 return true;
             }
         } catch (Exception e) {
-            log.info("Исключение в методе deleteById() класса PostgresTicketRepository ", e);
+            log.info("Исключение в методе deleteById() класса JdbcTicketRepository ", e);
         }
         return false;
     }
@@ -242,7 +235,7 @@ public class PostgresTicketRepository implements TicketRepository {
      */
     @Override
     public boolean deleteTicketsByShowId(int id) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(DELETE_BY_SHOW_ID)
         ) {
             ps.setInt(1, id);
@@ -251,7 +244,7 @@ public class PostgresTicketRepository implements TicketRepository {
                 return true;
             }
         } catch (Exception e) {
-            log.info("Исключение в методе deleteById() класса PostgresTicketRepository ", e);
+            log.info("Исключение в методе deleteById() класса JdbcTicketRepository ", e);
         }
         return false;
     }
@@ -265,7 +258,7 @@ public class PostgresTicketRepository implements TicketRepository {
     @Override
     public List<Ticket> findAllTicketsByShowId(int id) {
         List<Ticket> tickets = new ArrayList<>();
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_SHOW_ID_SELECT)
         ) {
             ps.setInt(1, id);
@@ -276,7 +269,7 @@ public class PostgresTicketRepository implements TicketRepository {
             }
         } catch (Exception e) {
             log.info("Исключение в методе findAllTicketsByShowId() "
-                    + "класса PostgresTicketRepository ", e);
+                    + "класса JdbcTicketRepository ", e);
         }
         return tickets;
     }

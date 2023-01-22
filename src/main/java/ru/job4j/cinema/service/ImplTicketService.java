@@ -1,5 +1,6 @@
 package ru.job4j.cinema.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.repository.TicketRepository;
@@ -10,10 +11,11 @@ import java.util.Optional;
 
 /**
  * Реализация сервиса по работе с билета
- * @see ru.job4j.cinema.model.Ticket
+ * @see ru.job4j.cinema.service.TicketService
  * @author Alexander Emelyanov
  * @version 1.0
  */
+@AllArgsConstructor
 @Service
 public class ImplTicketService implements TicketService {
 
@@ -21,16 +23,6 @@ public class ImplTicketService implements TicketService {
      * Объект для доступа к методам TicketRepository
      */
     private final TicketRepository ticketRepository;
-
-    /**
-     * Конструктор класса.
-     *
-     * @param ticketRepository объект для доступа к методам TicketRepository
-     * @see ru.job4j.cinema.repository.TicketRepository
-     */
-    public ImplTicketService(TicketRepository ticketRepository) {
-        this.ticketRepository = ticketRepository;
-    }
 
     /**
      * Возвращает список всех билетов

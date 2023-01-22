@@ -18,11 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Тест класс реализации хранилища сеансов
- * @see PostgresShowRepository
+ * @see JdbcShowRepository
  * @author Alexander Emelyanov
  * @version 1.0
  */
-class PostgresShowRepositoryTest {
+class JdbcShowRepositoryTest {
 
     /**
      * SQL запрос по очистке от данных таблицы shows
@@ -32,9 +32,9 @@ class PostgresShowRepositoryTest {
             """;
 
     /**
-     * Объект репозитория PostgresShowRepository
+     * Объект репозитория JdbcShowRepository
      */
-    private PostgresShowRepository showRepository;
+    private JdbcShowRepository showRepository;
 
     /**
      * Сеанс
@@ -47,7 +47,7 @@ class PostgresShowRepositoryTest {
      */
     @BeforeEach
     public void setup() {
-        showRepository = new PostgresShowRepository(
+        showRepository = new JdbcShowRepository(
                 new DataSourceConfig().loadPool());
         show = Show.builder()
                 .id(1)
@@ -64,8 +64,8 @@ class PostgresShowRepositoryTest {
      */
     @AfterEach
     public void wipeTable() throws SQLException {
-        try (BasicDataSource pool = new DataSourceConfig().loadPool();
-             Connection connection = pool.getConnection();
+        try (BasicDataSource dataSource = new DataSourceConfig().loadPool();
+             Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(CLEAR_TABLE)
         ) {
             statement.execute();
@@ -75,7 +75,7 @@ class PostgresShowRepositoryTest {
     /**
      * Создается объект show и сохраняется в базе данных.
      * По полю id объект show в базе данных, сохраняется в объект showFromDB
-     * при помощи метода {@link PostgresShowRepository#findById(int)}
+     * при помощи метода {@link JdbcShowRepository#findById(int)}
      * и проверяется его эквивалентность объекту show по полю name.
      */
     @Test
@@ -88,10 +88,10 @@ class PostgresShowRepositoryTest {
     /**
      * Создается объект show и сохраняется в базе данных.
      * Выполняется изменение данных с обновлением объекта show в
-     * базе данных при помощи метода {@link PostgresShowRepository#update(Show)}.
+     * базе данных при помощи метода {@link JdbcShowRepository#update(Show)}.
      * Результат обновления записывается в переменную updateResult.
      * По полю id объект show находится в базе данных, сохраняется в объект showFromDB
-     * при помощи метода {@link PostgresShowRepository#findById(int)},
+     * при помощи метода {@link JdbcShowRepository#findById(int)},
      * далее проверяется его эквивалентность объекту show
      * и переменной updateResult на эквивалентность true.
      */
@@ -108,10 +108,10 @@ class PostgresShowRepositoryTest {
     /**
      * Создается объект show и сохраняется в базе данных, поле id записывается в переменную oldId.
      * У объекта show выполняется изменение полей username и id, далее производится обновление
-     * объекта show в базе данных при помощи метода {@link PostgresShowRepository#update(Show)}.
+     * объекта show в базе данных при помощи метода {@link JdbcShowRepository#update(Show)}.
      * Результат обновления записывается в переменную updateResult.
      * По переменной oldId объект show находится в базе данных, сохраняется в объект showFromDB
-     * при помощи метода {@link PostgresShowRepository#findById(int)}, далее
+     * при помощи метода {@link JdbcShowRepository#findById(int)}, далее
      * проверяется отсутствие эквивалентности объекту show
      * и переменной updateResult на эквивалентность false.
      */
@@ -130,7 +130,7 @@ class PostgresShowRepositoryTest {
     /**
      * Создаются объекты show, show2 и сохраняются в базе данных.
      * По полю id объект show находится в базе данных при помощи метода
-     * {@link PostgresShowRepository#findById(int)} и проверяется на эквивалентность
+     * {@link JdbcShowRepository#findById(int)} и проверяется на эквивалентность
      * объекту show по полю name.
      */
     @Test
@@ -148,7 +148,7 @@ class PostgresShowRepositoryTest {
     /**
      * Создается объект show и сохраняется в базе данных.
      * По полю id объект show находится в базе данных при помощи
-     * метода {@link PostgresShowRepository#findById(int)} и
+     * метода {@link JdbcShowRepository#findById(int)} и
      * проверяется на эквивалентность Optional.empty().
      */
     @Test
@@ -159,9 +159,9 @@ class PostgresShowRepositoryTest {
     /**
      * Создается объект show и сохраняется в базе данных.
      * По полю id объект show удаляется из базы данных при помощи метода
-     * {@link PostgresShowRepository#deleteById(int)}
-     * Метод {@link PostgresShowRepository#deleteById(int)} при удалении
-     * объекта возвращает true, вызов метода {@link PostgresShowRepository#findById(int)}
+     * {@link JdbcShowRepository#deleteById(int)}
+     * Метод {@link JdbcShowRepository#deleteById(int)} при удалении
+     * объекта возвращает true, вызов метода {@link JdbcShowRepository#findById(int)}
      * проверяется на эквивалентность Optional.empty().
      */
     @Test
@@ -174,7 +174,7 @@ class PostgresShowRepositoryTest {
 
     /**
      * Создаются объекты show, show2 и сохраняются в базе данных.
-     * Через вызов метода {@link PostgresShowRepository#findAll()}
+     * Через вызов метода {@link JdbcShowRepository#findAll()}
      * получаем список объекты shows, который сортируется по id.
      * Выполняем проверку размера списка и содержание элементов
      * на эквивалентность объектам show и show2 по полям name.

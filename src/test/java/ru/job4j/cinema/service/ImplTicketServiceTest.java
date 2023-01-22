@@ -8,7 +8,7 @@ import org.mockito.Mockito;
 import ru.job4j.cinema.model.Show;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
-import ru.job4j.cinema.repository.PostgresShowRepository;
+import ru.job4j.cinema.repository.JdbcShowRepository;
 import ru.job4j.cinema.repository.TicketRepository;
 
 import java.util.Collections;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.doReturn;
 
 /**
  * Тест класс реализации сервисного слоя билетов
- * @see PostgresShowRepository
+ * @see JdbcShowRepository
  * @author Alexander Emelyanov
  * @version 1.0
  */

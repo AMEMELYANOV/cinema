@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PostgresUserRepositoryTest {
+class JdbcUserRepositoryTest {
 
     /**
      * SQL запрос по очистке от данных таблицы users
@@ -26,9 +26,9 @@ class PostgresUserRepositoryTest {
             """;
 
     /**
-     * Объект репозитория PostgresUserRepository
+     * Объект репозитория JdbcUserRepository
      */
-    private PostgresUserRepository userRepository;
+    private JdbcUserRepository userRepository;
 
     /**
      * Пользователь
@@ -41,7 +41,7 @@ class PostgresUserRepositoryTest {
      */
     @BeforeEach
     public void setup() {
-        userRepository = new PostgresUserRepository(
+        userRepository = new JdbcUserRepository(
                 new DataSourceConfig().loadPool());
         user = User.builder()
                 .id(1)
@@ -60,8 +60,8 @@ class PostgresUserRepositoryTest {
      */
     @AfterEach
     public void wipeTable() throws SQLException {
-        try (BasicDataSource pool = new DataSourceConfig().loadPool();
-             Connection connection = pool.getConnection();
+        try (BasicDataSource dataSource = new DataSourceConfig().loadPool();
+             Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(CLEAR_TABLE)
         ) {
             statement.execute();
@@ -71,7 +71,7 @@ class PostgresUserRepositoryTest {
     /**
      * Создается объект user и сохраняется в базе данных.
      * По полю id объект user находится в базе данных, сохраняется в объект userFromDB
-     * при помощи метода {@link PostgresUserRepository#findById(int)}
+     * при помощи метода {@link JdbcUserRepository#findById(int)}
      * и проверяется его эквивалентность объекту user по полю name.
      */
     @Test
@@ -84,10 +84,10 @@ class PostgresUserRepositoryTest {
     /**
      * Создается объект user и сохраняется в базе данных.
      * Выполняется изменение данных с обновлением объекта user в
-     * базе данных при помощи метода {@link PostgresUserRepository#update(User)}.
+     * базе данных при помощи метода {@link JdbcUserRepository#update(User)}.
      * Результат обновления записывается в переменную updateResult.
      * По полю id объект user находится в базе данных, сохраняется в объект userFromDB
-     * при помощи метода {@link PostgresUserRepository#findById(int)},
+     * при помощи метода {@link JdbcUserRepository#findById(int)},
      * далее проверяется его эквивалентность объекту user
      * и переменной updateResult на эквивалентность true.
      */
@@ -104,10 +104,10 @@ class PostgresUserRepositoryTest {
     /**
      * Создается объект user и сохраняется в базе данных, поле id записывается в переменную oldId.
      * У объекта user выполняется изменение полей username и id, далее производится обновление
-     * объекта user в базе данных при помощи метода {@link PostgresUserRepository#update(User)}.
+     * объекта user в базе данных при помощи метода {@link JdbcUserRepository#update(User)}.
      * Результат обновления записывается в переменную updateResult.
      * По переменной oldId объект user находится в базе данных, сохраняется в объект userFromDB
-     * при помощи метода {@link PostgresUserRepository#findById(int)}, далее
+     * при помощи метода {@link JdbcUserRepository#findById(int)}, далее
      * проверяется отсутствие эквивалентности объекту user
      * и переменной updateResult на эквивалентность false.
      */
@@ -126,7 +126,7 @@ class PostgresUserRepositoryTest {
     /**
      * Создаются объекты user, user2 и сохраняются в базе данных.
      * По полю id объект user находится в базе данных при помощи метода
-     * {@link PostgresUserRepository#findById(int)} и проверяется на эквивалентность
+     * {@link JdbcUserRepository#findById(int)} и проверяется на эквивалентность
      * объекту user по полю name.
      */
     @Test
@@ -146,7 +146,7 @@ class PostgresUserRepositoryTest {
     /**
      * Создается объект user и сохраняется в базе данных.
      * По полю id объект user находится в базе данных при помощи
-     * метода {@link PostgresUserRepository#findById(int)} и
+     * метода {@link JdbcUserRepository#findById(int)} и
      * проверяется на эквивалентность Optional.empty().
      */
     @Test
@@ -157,9 +157,9 @@ class PostgresUserRepositoryTest {
     /**
      * Создается объект user и сохраняется в базе данных.
      * По полю id объект user удаляется из базы данных при помощи метода
-     * {@link PostgresUserRepository#deleteById(int)}
-     * Метод {@link PostgresUserRepository#deleteById(int)} при удалении
-     * объекта возвращает true, вызов метода {@link PostgresUserRepository#findById(int)}
+     * {@link JdbcUserRepository#deleteById(int)}
+     * Метод {@link JdbcUserRepository#deleteById(int)} при удалении
+     * объекта возвращает true, вызов метода {@link JdbcUserRepository#findById(int)}
      * проверяется на эквивалентность Optional.empty().
      */
     @Test
@@ -172,7 +172,7 @@ class PostgresUserRepositoryTest {
 
     /**
      * Создаются объекты user, user2 и сохраняются в базе данных.
-     * Через вызов метода {@link PostgresUserRepository#findAll()}
+     * Через вызов метода {@link JdbcUserRepository#findAll()}
      * получаем список объекты users, который сортируется по id.
      * Выполняем проверку размера списка и содержание элементов
      * на эквивалентность объектам user и user2 по полям name.

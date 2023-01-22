@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class PostgresTicketRepositoryTest {
+class JdbcTicketRepositoryTest {
 
     /**
      * SQL запрос по очистке от данных таблицы users
@@ -42,19 +42,19 @@ class PostgresTicketRepositoryTest {
             """;
 
     /**
-     * Объект репозитория PostgresTicketRepository
+     * Объект репозитория JdbcTicketRepository
      */
-    private PostgresTicketRepository ticketRepository;
+    private JdbcTicketRepository ticketRepository;
 
     /**
-     * Объект репозитория PostgresShowRepository
+     * Объект репозитория JdbcShowRepository
      */
-    private PostgresShowRepository showRepository;
+    private JdbcShowRepository showRepository;
 
     /**
-     * Объект репозитория PostgresUserRepository
+     * Объект репозитория JdbcUserRepository
      */
-    private PostgresUserRepository userRepository;
+    private JdbcUserRepository userRepository;
 
     /**
      * Билет
@@ -77,11 +77,11 @@ class PostgresTicketRepositoryTest {
      */
     @BeforeEach
     public void setup() {
-        ticketRepository = new PostgresTicketRepository(
+        ticketRepository = new JdbcTicketRepository(
                 new DataSourceConfig().loadPool());
-        showRepository = new PostgresShowRepository(
+        showRepository = new JdbcShowRepository(
                 new DataSourceConfig().loadPool());
-        userRepository = new PostgresUserRepository(
+        userRepository = new JdbcUserRepository(
                 new DataSourceConfig().loadPool());
         user = User.builder()
                 .id(1)
@@ -114,8 +114,8 @@ class PostgresTicketRepositoryTest {
      */
     @AfterEach
     public void wipeTable() throws SQLException {
-        try (BasicDataSource pool = new DataSourceConfig().loadPool();
-             Connection connection = pool.getConnection();
+        try (BasicDataSource dataSource = new DataSourceConfig().loadPool();
+             Connection connection = dataSource.getConnection();
              PreparedStatement statement1 = connection.prepareStatement(CLEAR_TABLE_TICKETS);
              PreparedStatement statement2 = connection.prepareStatement(CLEAR_TABLE_SHOWS);
              PreparedStatement statement3 = connection.prepareStatement(CLEAR_TABLE_USERS)
@@ -129,7 +129,7 @@ class PostgresTicketRepositoryTest {
     /**
      * Создается объект ticket и сохраняется в базе данных.
      * По полю id объект ticket находится в базе данных, сохраняется в объект showFromDB
-     * при помощи метода {@link PostgresTicketRepository#findById(int)}
+     * при помощи метода {@link JdbcTicketRepository#findById(int)}
      * и проверяется его эквивалентность объекту ticket по полю name.
      */
     @Test
@@ -148,10 +148,10 @@ class PostgresTicketRepositoryTest {
     /**
      * Создается объект ticket и сохраняется в базе данных.
      * Выполняется изменение данных с обновлением объекта ticket в
-     * базе данных при помощи метода {@link PostgresTicketRepository#update(Ticket)}.
+     * базе данных при помощи метода {@link JdbcTicketRepository#update(Ticket)}.
      * Результат обновления записывается в переменную updateResult.
      * По полю id объект ticket находится в базе данных, сохраняется в объект ticket
-     * при помощи метода {@link PostgresTicketRepository#findById(int)},
+     * при помощи метода {@link JdbcTicketRepository#findById(int)},
      * далее проверяется его эквивалентность объекту ticket
      * и переменной updateResult на эквивалентность true.
      */
@@ -168,10 +168,10 @@ class PostgresTicketRepositoryTest {
     /**
      * Создается объект ticket и сохраняется в базе данных.
      * Выполняется изменение полей posRow и id с обновлением объекта ticket в
-     * базе данных при помощи метода {@link PostgresTicketRepository#update(Ticket)}.
+     * базе данных при помощи метода {@link JdbcTicketRepository#update(Ticket)}.
      * Результат обновления записывается в переменную updateResult.
      * По полю oldId объект ticket находится в базе данных, сохраняется в переменную ticketFromDB
-     * при помощи метода {@link PostgresTicketRepository#findById(int)}, далее
+     * при помощи метода {@link JdbcTicketRepository#findById(int)}, далее
      * проверяется отсутствие эквивалентности ticketFromDB объекту ticket
      * и переменной updateResult на эквивалентность false.
      */
@@ -190,7 +190,7 @@ class PostgresTicketRepositoryTest {
     /**
      * Создаются объекты ticket, ticket2 и сохраняются в базе данных.
      * По полю id объект ticket находится в базе данных при помощи метода
-     * {@link PostgresTicketRepository#findById(int)} и проверяется на эквивалентность
+     * {@link JdbcTicketRepository#findById(int)} и проверяется на эквивалентность
      * объекту ticket по полю name.
      */
     @Test
@@ -228,7 +228,7 @@ class PostgresTicketRepositoryTest {
     /**
      * Создается объект ticket и сохраняется в базе данных.
      * По полю id объект ticket находится в базе данных при помощи
-     * метода {@link PostgresTicketRepository#findById(int)} и
+     * метода {@link JdbcTicketRepository#findById(int)} и
      * проверяется на эквивалентность Optional.empty().
      */
     @Test
@@ -239,9 +239,9 @@ class PostgresTicketRepositoryTest {
     /**
      * Создается объект ticket и сохраняется в базе данных.
      * По полю id объект ticket удаляется из базы данных при помощи метода
-     * {@link PostgresTicketRepository#deleteById(int)}
-     * Метод {@link PostgresTicketRepository#deleteById(int)} при удалении
-     * объекта возвращает true, вызов метода {@link PostgresTicketRepository#findById(int)}
+     * {@link JdbcTicketRepository#deleteById(int)}
+     * Метод {@link JdbcTicketRepository#deleteById(int)} при удалении
+     * объекта возвращает true, вызов метода {@link JdbcTicketRepository#findById(int)}
      * проверяется на эквивалентность Optional.empty().
      */
     @Test
@@ -255,9 +255,9 @@ class PostgresTicketRepositoryTest {
     /**
      * Создаются объекты ticket, ticket1 и сохраняются в базе данных.
      * По полю show_id сеанса объекты ticket и ticket1 удаляются из базы данных при помощи метода
-     * {@link PostgresTicketRepository#deleteTicketsByShowId(int)}
-     * Метод {@link PostgresTicketRepository#deleteTicketsByShowId(int)} при удалении
-     * объекта возвращает true, вызов метода {@link PostgresTicketRepository#findAll()}
+     * {@link JdbcTicketRepository#deleteTicketsByShowId(int)}
+     * Метод {@link JdbcTicketRepository#deleteTicketsByShowId(int)} при удалении
+     * объекта возвращает true, вызов метода {@link JdbcTicketRepository#findAll()}
      * должен вернуть пустую коллекцию.
      */
     @Test
@@ -276,7 +276,7 @@ class PostgresTicketRepositoryTest {
 
     /**
      * Создаются объекты ticket, ticket2 и сохраняются в базе данных.
-     * Через вызов метода {@link PostgresTicketRepository#findAll()}
+     * Через вызов метода {@link JdbcTicketRepository#findAll()}
      * получаем список объекты tickets, который сортируется по id.
      * Выполняем проверку размера списка и содержание элементов
      * на эквивалентность объектам ticket и ticket2 по полям name.

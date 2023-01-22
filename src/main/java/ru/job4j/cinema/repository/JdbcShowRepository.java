@@ -1,5 +1,6 @@
 package ru.job4j.cinema.repository;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.Show;
@@ -20,11 +21,12 @@ import java.util.Optional;
  * @version 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @Repository
-public class PostgresShowRepository implements ShowRepository {
+public class JdbcShowRepository implements ShowRepository {
 
     /**
-     * SQL запрос по выбору всех сеансов из таблицы seshows
+     * SQL запрос по выбору всех сеансов из таблицы shows
      */
     private static final String FIND_ALL_SELECT = """
             SELECT
@@ -36,7 +38,7 @@ public class PostgresShowRepository implements ShowRepository {
             """;
 
     /**
-     * SQL запрос по выбору всех сеансов из таблицы shows с фильтром по id
+     * SQL запрос по выбору сеанса из таблицы shows с фильтром по id
      */
     private static final String FIND_BY_ID_SELECT = FIND_ALL_SELECT + """
             WHERE id = ?
@@ -67,16 +69,7 @@ public class PostgresShowRepository implements ShowRepository {
     /**
      * Объект для выполнения подключения к базе данных приложения
      */
-    private final DataSource pool;
-
-    /**
-     * Конструктор класса.
-     *
-     * @param dataSource объект для выполнения подключения к базе данных приложения
-     */
-    public PostgresShowRepository(DataSource dataSource) {
-        this.pool = dataSource;
-    }
+    private final DataSource dataSource;
 
     /**
      * Возвращает список всех сеансов
@@ -86,7 +79,7 @@ public class PostgresShowRepository implements ShowRepository {
     @Override
     public List<Show> findAll() {
         List<Show> shows = new ArrayList<>();
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_ALL_SELECT)
         ) {
             try (ResultSet it = ps.executeQuery()) {
@@ -95,7 +88,7 @@ public class PostgresShowRepository implements ShowRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе findAll() класса PostgresShowRepository ", e);
+            log.info("Исключение в методе findAll() класса JdbcShowRepository ", e);
         }
         return shows;
     }
@@ -109,7 +102,7 @@ public class PostgresShowRepository implements ShowRepository {
      */
     @Override
     public Optional<Show> findById(int id) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_ID_SELECT)
         ) {
             ps.setInt(1, id);
@@ -119,7 +112,7 @@ public class PostgresShowRepository implements ShowRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе findById() класса PostgresShowRepository ", e);
+            log.info("Исключение в методе findById() класса JdbcShowRepository ", e);
         }
         return Optional.empty();
     }
@@ -133,7 +126,7 @@ public class PostgresShowRepository implements ShowRepository {
      */
     @Override
     public Optional<Show> save(Show show) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(INSERT_INTO,
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
@@ -148,7 +141,7 @@ public class PostgresShowRepository implements ShowRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе save() класса PostgresShowRepository ", e);
+            log.info("Исключение в методе save() класса JdbcShowRepository ", e);
         }
         return Optional.empty();
     }
@@ -162,7 +155,7 @@ public class PostgresShowRepository implements ShowRepository {
     @Override
     public boolean update(Show show) {
         boolean result = false;
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(UPDATE)
         ) {
             ps.setString(1, show.getName());
@@ -171,7 +164,7 @@ public class PostgresShowRepository implements ShowRepository {
             ps.setInt(4, show.getId());
             result = ps.executeUpdate() > 0;
         } catch (Exception e) {
-            log.info("Исключение в методе update() класса PostgresShowRepository ", e);
+            log.info("Исключение в методе update() класса JdbcShowRepository ", e);
         }
         return result;
     }
@@ -185,7 +178,7 @@ public class PostgresShowRepository implements ShowRepository {
      */
     @Override
     public boolean deleteById(int id) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(DELETE)
         ) {
             ps.setInt(1, id);

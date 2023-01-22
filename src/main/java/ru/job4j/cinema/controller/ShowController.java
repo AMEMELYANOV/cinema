@@ -1,5 +1,6 @@
 package ru.job4j.cinema.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,7 @@ import java.util.List;
  * @version 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @Controller
 public class ShowController {
 
@@ -28,15 +30,6 @@ public class ShowController {
      * Объект для доступа к методам UserService
      */
     private final ShowService showService;
-
-    /**
-     * Конструктор класса.
-     *
-     * @param showService объект для доступа к методам слоя ShowService
-     */
-    public ShowController(ShowService showService) {
-        this.showService = showService;
-    }
 
     /**
      * Обрабатывает GET запрос, возвращает страницу списка сеансов для

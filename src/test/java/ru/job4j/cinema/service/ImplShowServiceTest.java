@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockMultipartFile;
 import ru.job4j.cinema.model.Show;
-import ru.job4j.cinema.repository.PostgresShowRepository;
+import ru.job4j.cinema.repository.JdbcShowRepository;
 import ru.job4j.cinema.repository.ShowRepository;
 import ru.job4j.cinema.repository.TicketRepository;
 
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * Тест класс реализации сервисного слоя сеансов
- * @see PostgresShowRepository
+ * @see JdbcShowRepository
  * @author Alexander Emelyanov
  * @version 1.0
  */

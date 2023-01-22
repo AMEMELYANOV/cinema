@@ -1,5 +1,6 @@
 package ru.job4j.cinema.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.*;
  *
  * @author Alexander Emelyanov
  * @version 1.0
- * @see ru.job4j.cinema.model.Show
+ * @see ru.job4j.cinema.service.ShowService
  */
 @Slf4j
 @Service

@@ -1,5 +1,6 @@
 package ru.job4j.cinema.repository;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cinema.model.User;
@@ -20,8 +21,9 @@ import java.util.Optional;
  * @version 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @Repository
-public class PostgresUserRepository implements UserRepository {
+public class JdbcUserRepository implements UserRepository {
 
     /**
      * SQL запрос по выбору всех пользователей из таблицы users
@@ -83,16 +85,7 @@ public class PostgresUserRepository implements UserRepository {
     /**
      * Объект для выполнения подключения к базе данных приложения
      */
-    private final DataSource pool;
-
-    /**
-     * Конструктор класса.
-     *
-     * @param dataSource объект для выполнения подключения к базе данных приложения
-     */
-    public PostgresUserRepository(DataSource dataSource) {
-        this.pool = dataSource;
-    }
+    private final DataSource dataSource;
 
     /**
      * Возвращает список всех пользователей.
@@ -102,7 +95,7 @@ public class PostgresUserRepository implements UserRepository {
     @Override
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_ALL_SELECT)
         ) {
             try (ResultSet it = ps.executeQuery()) {
@@ -111,7 +104,7 @@ public class PostgresUserRepository implements UserRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе findAll() класса PostgresUserRepository ", e);
+            log.info("Исключение в методе findAll() класса JdbcUserRepository ", e);
         }
         return users;
     }
@@ -125,7 +118,7 @@ public class PostgresUserRepository implements UserRepository {
      */
     @Override
     public Optional<User> findById(int id) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_ID_SELECT)
         ) {
             ps.setInt(1, id);
@@ -135,7 +128,7 @@ public class PostgresUserRepository implements UserRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе findById() класса PostgresUserRepository ", e);
+            log.info("Исключение в методе findById() класса JdbcUserRepository ", e);
         }
         return Optional.empty();
     }
@@ -149,7 +142,7 @@ public class PostgresUserRepository implements UserRepository {
      */
     @Override
     public Optional<User> findUserByEmail(String email) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_EMAIL_SELECT)
         ) {
             ps.setString(1, email);
@@ -159,7 +152,7 @@ public class PostgresUserRepository implements UserRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе findByEmail() класса PostgresUserRepository ", e);
+            log.info("Исключение в методе findByEmail() класса JdbcUserRepository ", e);
         }
         return Optional.empty();
     }
@@ -173,7 +166,7 @@ public class PostgresUserRepository implements UserRepository {
      */
     @Override
     public Optional<User> findUserByPhone(String phone) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(FIND_BY_PHONE_SELECT)
         ) {
             ps.setString(1, phone);
@@ -183,7 +176,7 @@ public class PostgresUserRepository implements UserRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе findByPhone() класса PostgresUserRepository ", e);
+            log.info("Исключение в методе findByPhone() класса JdbcUserRepository ", e);
         }
         return Optional.empty();
     }
@@ -199,7 +192,7 @@ public class PostgresUserRepository implements UserRepository {
      */
     @Override
     public Optional<User> save(User user) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(INSERT_INTO,
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
@@ -215,7 +208,7 @@ public class PostgresUserRepository implements UserRepository {
                 }
             }
         } catch (Exception e) {
-            log.info("Исключение в методе save() класса PostgresUserRepository ", e);
+            log.info("Исключение в методе save() класса JdbcUserRepository ", e);
         }
         return Optional.empty();
     }
@@ -229,7 +222,7 @@ public class PostgresUserRepository implements UserRepository {
     @Override
     public boolean update(User user) {
         boolean result = false;
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(UPDATE)
         ) {
             ps.setString(1, user.getUsername());
@@ -240,7 +233,7 @@ public class PostgresUserRepository implements UserRepository {
             result = ps.executeUpdate() > 0;
 
         } catch (Exception e) {
-            log.info("Исключение в методе update() класса PostgresUserRepository ", e);
+            log.info("Исключение в методе update() класса JdbcUserRepository ", e);
         }
         return result;
     }
@@ -254,7 +247,7 @@ public class PostgresUserRepository implements UserRepository {
      */
     @Override
     public boolean deleteById(int id) {
-        try (Connection cn = pool.getConnection();
+        try (Connection cn = dataSource.getConnection();
              PreparedStatement ps = cn.prepareStatement(DELETE)
         ) {
             ps.setInt(1, id);
@@ -263,7 +256,7 @@ public class PostgresUserRepository implements UserRepository {
                 return true;
             }
         } catch (Exception e) {
-            log.info("Исключение в методе deleteById() класса PostgresUserRepository ", e);
+            log.info("Исключение в методе deleteById() класса JdbcUserRepository ", e);
         }
         return false;
     }

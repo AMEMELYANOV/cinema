@@ -1,5 +1,6 @@
 package ru.job4j.cinema.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.repository.UserRepository;
@@ -9,10 +10,11 @@ import java.util.NoSuchElementException;
 
 /**
  * Реализация сервиса по работе с пользователями
- * @see ru.job4j.cinema.model.User
+ * @see ru.job4j.cinema.service.UserService
  * @author Alexander Emelyanov
  * @version 1.0
  */
+@AllArgsConstructor
 @Service
 public class ImplUserService implements UserService {
 
@@ -20,16 +22,6 @@ public class ImplUserService implements UserService {
      * Объект для доступа к методам UserRepository
      */
     private final UserRepository userRepository;
-
-    /**
-     * Конструктор класса.
-     *
-     * @param userRepository объект для доступа к методам UserRepository
-     * @see ru.job4j.cinema.repository.UserRepository
-     */
-    public ImplUserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     /**
      * Возвращает список всех пользователей
@@ -79,7 +71,8 @@ public class ImplUserService implements UserService {
     @Override
     public boolean update(User user) {
         if (!userRepository.update(user)) {
-            throw new NoSuchElementException("Пользователь с номером телефона уже существует");
+            throw new IllegalArgumentException("Пользователь с таким номером телефона "
+                    + "уже зарегистрирован");
         }
         return true;
     }
@@ -137,57 +130,6 @@ public class ImplUserService implements UserService {
     }
 
     /**
-     * Выполняет сверку данных пользователя с формы регистрации с данными пользователя в базе по
-     * почтовому адресу. Исключения выбрасываются при несовпадении паролей указанных при регистрации
-     * и при наличии в базе пользователя с таким же паролем и номером телефона.
-     * При успешной регистрации возвращает пользователя, созданного с данными формы регистрации
-     *
-     * @param user пользователя
-     * @return пользователя при успешном при совпадении пароля и почтового адреса
-     * @exception IllegalStateException, если пароли пользователя не совпали
-     * @exception IllegalArgumentException, если пользователь с таким же email или паролем
-     * сохранен в базе
-     */
-    @Override
-    public User validateUserReg(User user, String repassword) {
-        if (!user.getPassword().equals(repassword)) {
-            throw new IllegalStateException("Пароли не совпадают");
-        }
-        User userFromDB = userRepository.findUserByEmail(user.getEmail()).orElse(null);
-        if (userFromDB != null) {
-            throw new IllegalArgumentException(
-                    String.format("Аккаунт с email = %s уже существует!", user.getEmail()));
-        }
-        return user;
-    }
-
-    /**
-     * Выполняет сверку данных пользователя с формы редактирования с данными пользователя в базе по
-     * почтовому адресу и паролю. Исключения выбрасываются при несовпадении существующего пароля
-     * пользователя и при наличии в базе пользователя с таким же номером телефона.
-     * При успешной регистрации возвращает пользователя, созданного с данными формы регистрации
-     *
-     * @param user пользователя
-     * @return пользователя при успешном при совпадении пароля и почтового адреса
-     * @exception IllegalStateException, если старый пароль пользователя не совпал
-     * @exception IllegalArgumentException, если пользователь с таким же email или паролем
-     * сохранен в базе
-     */
-    @Override
-    public User validateUserUpdate(User user, String oldPassword) {
-        User userFromDB = userRepository.findUserByEmail(user.getEmail()).orElse(null);
-        if (oldPassword == null || !oldPassword.equals(userFromDB.getPassword())) {
-            throw new IllegalStateException("Пароли не совпадают");
-        }
-        User userByPhone = userRepository.findUserByPhone(user.getPhone()).orElse(null);
-        if (userByPhone != null && userByPhone.getId() != user.getId()) {
-            throw new IllegalArgumentException(
-                    "Пользователь с таким номером телефона зарегистрирован");
-        }
-        return user;
-     }
-
-    /**
      * Выполняет поиск пользователя по номеру телефона. При успешном нахождении возвращает
      * пользователя, иначе выбрасывает исключение.
      *
@@ -198,7 +140,7 @@ public class ImplUserService implements UserService {
     @Override
     public User findUserByPhone(String phone) {
         return userRepository.findUserByPhone(phone).orElseThrow(
-                () -> new NoSuchElementException(
+                () -> new IllegalArgumentException(
                         String.format("Пользователь с phone = %s не найден", phone)));
     }
 }

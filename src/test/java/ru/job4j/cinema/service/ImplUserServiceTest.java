@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import ru.job4j.cinema.model.User;
-import ru.job4j.cinema.repository.PostgresShowRepository;
+import ru.job4j.cinema.repository.JdbcShowRepository;
 import ru.job4j.cinema.repository.UserRepository;
 
 import java.util.Collections;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * Тест класс реализации сервисного слоя пользователей
- * @see PostgresShowRepository
+ * @see JdbcShowRepository
  * @author Alexander Emelyanov
  * @version 1.0
  */
@@ -161,7 +161,7 @@ class ImplUserServiceTest {
     void whenUpdateThenThrowsException() {
         doReturn(false).when(userRepository).update(user);
 
-        assertThrows(NoSuchElementException.class, () -> userService.update(user));
+        assertThrows(IllegalArgumentException.class, () -> userService.update(user));
     }
 
     /**
@@ -243,44 +243,5 @@ class ImplUserServiceTest {
 
         assertThrows(IllegalArgumentException.class,
                 () -> userService.validateUserLogin(newUser));
-    }
-
-    /**
-     * Выполняется проверка валидации пользователя при регистрации по email и паролю, при возврате
-     * от userRepository Optional.empty() (пользователь ранее не регистрировался) и совпадении
-     * паролей введенных на форме регистрации, производится возврат пользователя из метода.
-     */
-    @Test
-    void whenValidateUserRegThenReturnUser() {
-        doReturn(Optional.empty()).when(userRepository).findUserByEmail(user.getEmail());
-        User userFromDB = userService.validateUserReg(user, "123");
-
-        assertThat(userFromDB).isEqualTo(user);
-    }
-
-    /**
-     * Выполняется проверка валидации пользователя при регистрации по email и паролю, при возврате
-     * от userRepository Optional.of(user) (пользователь зарегистрирован), производится выброс
-     * исключения.
-     */
-    @Test
-    void whenValidateUserRegAndUserExistThenThrowsException() {
-        doReturn(Optional.of(user)).when(userRepository).findUserByEmail(user.getEmail());
-
-        assertThrows(IllegalArgumentException.class,
-                () -> userService.validateUserReg(user, "123"));
-    }
-
-    /**
-     * Выполняется проверка валидации пользователя при регистрации по email и паролю, при возврате
-     * от userRepository Optional.empty() (пользователь ранее не регистрировался), но пароли
-     * не совпадают, производится выброс исключения.
-     */
-    @Test
-    void whenValidateUserRegAndPasswordNotEqualThenThrowsException() {
-        doReturn(Optional.empty()).when(userRepository).findUserByEmail(user.getEmail());
-
-        assertThrows(IllegalStateException.class,
-                () -> userService.validateUserReg(user, "1234"));
     }
 }

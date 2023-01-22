@@ -1,5 +1,6 @@
 package ru.job4j.cinema.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
  * @version 1.0
  */
 @Slf4j
+@AllArgsConstructor
 @Controller
 public class UserController {
 
@@ -27,18 +29,9 @@ public class UserController {
     private final UserService userService;
 
     /**
-     * Конструктор класса.
-     *
-     * @param userService объект для доступа к методам слоя UserService
-     */
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
-    /**
      * Обрабатывает GET запрос, возвращает страницу редактирования пользователя.
      * В зависимости от параметров password и account на страницу будут выведены
-     * сообщения для пользователя.
+     * сообщения для пользователя о необходимости исправить вводимые данные.
      *
      * @param password параметр GET запроса, true, если есть ошибка валидации пароля
      * @param phone параметр GET запроса, true, если ошибка валидации номера телефона
@@ -81,7 +74,10 @@ public class UserController {
         if (errors.hasErrors()) {
             return "user/userEdit";
         }
-        userService.validateUserUpdate(user, oldPassword);
+        User userFromDB = userService.findUserByEmail(user.getEmail());
+        if (oldPassword == null || !oldPassword.equals(userFromDB.getPassword())) {
+            return "redirect:/userEdit?password=true";
+        }
         userService.update(user);
         request.getSession().setAttribute("user", user);
         return "redirect:/shows";

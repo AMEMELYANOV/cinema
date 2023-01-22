@@ -1,5 +1,6 @@
 package ru.job4j.cinema.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
  * @author Alexander Emelyanov
  * @version 1.0
  */
+@AllArgsConstructor
 @Controller
 public class TicketController {
 
@@ -27,20 +29,11 @@ public class TicketController {
     private final TicketService ticketService;
 
     /**
-     * Конструктор класса.
-     *
-     * @param ticketService объект для доступа к методам слоя TicketService
-     */
-    public TicketController(TicketService ticketService) {
-        this.ticketService = ticketService;
-    }
-
-    /**
      * Обрабатывает POST запрос, возвращает страницу покупки билета.
      *
      * @param cell пользователь сформированный из данных формы редактирования
      * @param model список ошибок полученных при валидации модели пользователя
-     * @param request старый пароль пользователя
+     * @param request запрос пользователя
      * @return страница покупки билета
      */
     @PostMapping("/buyTicket")
@@ -73,7 +66,7 @@ public class TicketController {
      * страницу с описанием ошибки.
      *
      * @param model модель
-     * @param request старый пароль пользователя
+     * @param request запрос пользователя
      * @return возвращает страницу информации о выполненной покупке
      */
     @PostMapping("/confirmBuyTicket")
@@ -97,7 +90,7 @@ public class TicketController {
      *
      * @param showId модель
      * @param model модель
-     * @param request старый пароль пользователя
+     * @param request запрос пользователя
      * @return возвращает страницу информации о выполненной покупке
      */
     @PostMapping("/clearTickets")

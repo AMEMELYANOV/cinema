@@ -1,5 +1,6 @@
 package ru.job4j.cinema.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +18,10 @@ import java.util.NoSuchElementException;
  * @author Alexander Emelyanov
  * @version 1.0
  */
-@Controller
+
 @Slf4j
+@AllArgsConstructor
+@Controller
 public class LoginController {
 
     /**
@@ -27,18 +30,9 @@ public class LoginController {
     private final UserService userService;
 
     /**
-     * Конструктор класса.
-     *
-     * @param userService объект для доступа к методам слоя UserService
-     */
-    public LoginController(UserService userService) {
-        this.userService = userService;
-    }
-
-    /**
      * Обрабатывает GET запрос, возвращает страницу входа пользователя.
      * В зависимости от параметров password и account на страницу будут выведены сообщения
-     * для пользователя.
+     * для пользователя о необходимости исправить вводимые данные.
      *
      * @param error параметр GET запроса, true, если есть ошибка при заполнении формы
      * @param logout параметр GET запроса, true, если пользователь разлогинился

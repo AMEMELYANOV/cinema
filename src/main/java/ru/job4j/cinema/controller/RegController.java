@@ -1,5 +1,6 @@
 package ru.job4j.cinema.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,11 @@ import javax.validation.Valid;
  * @author Alexander Emelyanov
  * @version 1.0
  */
-@Controller
+
 @Slf4j
+@AllArgsConstructor
 @RequestMapping("/registration")
+@Controller
 public class RegController {
 
     /**
@@ -28,18 +31,9 @@ public class RegController {
     private final UserService userService;
 
     /**
-     * Конструктор класса.
-     *
-     * @param userService объект для доступа к методам слоя UserService
-     */
-    public RegController(UserService userService) {
-        this.userService = userService;
-    }
-
-    /**
      * Обрабатывает GET запрос, возвращает страницу регистрации пользователя.
      * В зависимости от параметров password и account на страницу будут выведены
-     * сообщения для пользователя.
+     * сообщения для пользователя о необходимости исправить вводимые данные.
      *
      * @param password параметр GET запроса, true, если есть ошибка валидации пароля
      * @param account параметр GET запроса, true, если ошибка валидации
@@ -81,7 +75,10 @@ public class RegController {
         if (errors.hasErrors()) {
             return "user/registration";
         }
-        userService.validateUserReg(user, repassword);
+        if (!user.getPassword().equals(repassword)) {
+            return "redirect:/registration?password=true";
+        }
+//        userService.validateUserReg(user, repassword);
         userService.save(user);
         return "redirect:/login";
     }
