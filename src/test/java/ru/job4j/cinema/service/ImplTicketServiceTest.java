@@ -30,16 +30,14 @@ import static org.mockito.Mockito.doReturn;
 class ImplTicketServiceTest {
 
     /**
-     * Моск объекта репозитория
+     * Объект для доступа к методам TicketRepository
      */
-    @Mock
     private TicketRepository ticketRepository;
 
     /**
-     * Объект сервиса для внедрения моков
+     * Объект для доступа к методам ImplTicketService
      */
-    @InjectMocks
-    private  ImplTicketService ticketService;
+    private ImplTicketService ticketService;
 
     /**
      * Сеанс

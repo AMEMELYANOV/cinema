@@ -18,7 +18,6 @@ import javax.validation.Valid;
  * @author Alexander Emelyanov
  * @version 1.0
  */
-
 @Slf4j
 @AllArgsConstructor
 @RequestMapping("/registration")
@@ -78,7 +77,6 @@ public class RegController {
         if (!user.getPassword().equals(repassword)) {
             return "redirect:/registration?password=true";
         }
-//        userService.validateUserReg(user, repassword);
         userService.save(user);
         return "redirect:/login";
     }

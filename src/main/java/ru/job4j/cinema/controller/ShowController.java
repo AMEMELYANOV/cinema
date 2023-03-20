@@ -117,7 +117,6 @@ public class ShowController {
     @PostMapping("/editShow")
     public String editShow(@RequestParam(value = "showId") int showId,
                         Model model, HttpServletRequest request) {
-        HttpSession session = request.getSession();
         model.addAttribute("user", UserUtil.getSessionUser(request));
         model.addAttribute("show", showService.findById(showId));
         return "admin/editShow";

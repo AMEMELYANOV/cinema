@@ -26,21 +26,18 @@ import static org.mockito.Mockito.*;
 class ImplShowServiceTest {
 
     /**
-     Моск объекта репозитория
+     * Объект для доступа к методам ShowRepository
      */
-    @Mock
     private ShowRepository showRepository;
 
     /**
-     * Объект сервиса для внедрения моков
+     * Объект для доступа к методам TicketRepository
      */
-    @Mock
     private TicketRepository ticketRepository;
 
     /**
-     * Объект для внедрения моков
+     * Объект для доступа к методам TicketController
      */
-    @InjectMocks
     private  ImplShowService showService;
 
     /**

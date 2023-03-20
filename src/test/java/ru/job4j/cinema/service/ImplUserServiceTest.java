@@ -27,16 +27,14 @@ import static org.mockito.Mockito.*;
 class ImplUserServiceTest {
 
     /**
-     Моск объекта репозитория
+     * Объект для доступа к методам UserRepository
      */
-    @Mock
     private UserRepository userRepository;
 
     /**
-     * Объект сервиса для внедрения моков
+     * Объект для доступа к методам ImplUserService
      */
-    @InjectMocks
-    private  ImplUserService userService;
+    private ImplUserService userService;
 
     /**
      * Пользователь
