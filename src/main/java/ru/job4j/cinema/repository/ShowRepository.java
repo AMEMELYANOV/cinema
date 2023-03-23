@@ -7,9 +7,10 @@ import java.util.Optional;
 
 /**
  * Хранилище сеансов
- * @see ru.job4j.cinema.model.Show
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.model.Show
  */
 public interface ShowRepository {
 

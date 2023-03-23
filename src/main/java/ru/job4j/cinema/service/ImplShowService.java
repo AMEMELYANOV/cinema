@@ -1,6 +1,5 @@
 package ru.job4j.cinema.service;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -87,7 +86,7 @@ public class ImplShowService implements ShowService {
      *
      * @param id идентификатор сеанса
      * @return сеанса при успешном нахождении
-     * @throws NoSuchElementException, если сеанс не найден
+     * @throws NoSuchElementException если сеанс не найден
      */
     @Override
     public Show findById(int id) {
@@ -125,7 +124,7 @@ public class ImplShowService implements ShowService {
      *
      * @param show сохраняемый сеанс
      * @return сеанс при успешном сохранении
-     * @throws IllegalArgumentException, если сохранение сеанса не произошло
+     * @throws IllegalArgumentException если сохранение сеанса не произошло
      */
     @Override
     public Show save(Show show) {
@@ -139,7 +138,7 @@ public class ImplShowService implements ShowService {
      * Если постер изменен старый удаляется.
      *
      * @param show обновляемый сеанс
-     * @throws NoSuchElementException, если сеанс не найден
+     * @throws NoSuchElementException если сеанс не найден
      */
     @Override
     public boolean update(Show show) {
@@ -161,7 +160,7 @@ public class ImplShowService implements ShowService {
      *
      * @param id идентификатор сеанса
      * @return true при успешном удалении
-     * @throws NoSuchElementException, если сеанс не найден
+     * @throws NoSuchElementException если сеанс не найден
      */
     @Override
     public boolean deleteById(int id) {

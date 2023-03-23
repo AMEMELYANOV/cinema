@@ -18,6 +18,7 @@ import java.util.List;
 
 /**
  * Контроллер сеансов
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */
@@ -35,7 +36,7 @@ public class ShowController {
      * Обрабатывает GET запрос, возвращает страницу списка сеансов для
      * покупки билетов.
      *
-     * @param model модель
+     * @param model   модель
      * @param request запрос пользователя
      * @return страница списка сеансов
      */
@@ -50,7 +51,7 @@ public class ShowController {
      * Обрабатывает GET запрос, возвращает страницу списка сеансов для
      * администратора.
      *
-     * @param model модель
+     * @param model   модель
      * @param request запрос пользователя
      * @return страница списка сеансов для редактирования
      */
@@ -65,14 +66,14 @@ public class ShowController {
      * Обрабатывает POST запрос, возвращает страницу выбора
      * номера ряда на сеансе для покупки билетов.
      *
-     * @param showId идентификатор сеанса
-     * @param model модель
+     * @param showId  идентификатор сеанса
+     * @param model   модель
      * @param request запрос пользователя
      * @return страница выбора ряда
      */
     @PostMapping("/showRow")
     public String getPostShowRow(@RequestParam(value = "showId") int showId,
-                        Model model, HttpServletRequest request) {
+                                 Model model, HttpServletRequest request) {
         Show showFromDB = showService.findById(showId);
         model.addAttribute("show", showFromDB);
         List<Integer> rows = showService.getRows(showId);
@@ -88,14 +89,14 @@ public class ShowController {
      * Обрабатывает POST запрос, возвращает страницу выбора
      * номера места в ряду на сеансе для покупки билетов.
      *
-     * @param posRow идентификатор ряда
-     * @param model модель
+     * @param posRow  идентификатор ряда
+     * @param model   модель
      * @param request запрос пользователя
      * @return страница выбора места
      */
     @PostMapping("/showCell")
     public String setShowRow(@RequestParam(value = "posRow") int posRow,
-                        Model model, HttpServletRequest request) {
+                             Model model, HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.setAttribute("posRow", posRow);
         Show show = (Show) session.getAttribute("show");
@@ -109,14 +110,14 @@ public class ShowController {
      * Обрабатывает POST запрос, возвращает страницу
      * редактирования данных сеанса.
      *
-     * @param showId идентификатор сеанса
-     * @param model модель
+     * @param showId  идентификатор сеанса
+     * @param model   модель
      * @param request запрос пользователя
      * @return страница редактирования сеанса
      */
     @PostMapping("/editShow")
     public String editShow(@RequestParam(value = "showId") int showId,
-                        Model model, HttpServletRequest request) {
+                           Model model, HttpServletRequest request) {
         model.addAttribute("user", UserUtil.getSessionUser(request));
         model.addAttribute("show", showService.findById(showId));
         return "admin/editShow";
@@ -126,7 +127,7 @@ public class ShowController {
      * Обрабатывает GET запрос, возвращает страницу
      * добавления нового сеанса.
      *
-     * @param model модель
+     * @param model   модель
      * @param request запрос пользователя
      * @return страница добавления сеанса
      */

@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Контроллер билетов
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */
@@ -31,8 +32,8 @@ public class TicketController {
     /**
      * Обрабатывает POST запрос, возвращает страницу покупки билета.
      *
-     * @param cell пользователь сформированный из данных формы редактирования
-     * @param model список ошибок полученных при валидации модели пользователя
+     * @param cell    пользователь сформированный из данных формы редактирования
+     * @param model   список ошибок полученных при валидации модели пользователя
      * @param request запрос пользователя
      * @return страница покупки билета
      */
@@ -65,7 +66,7 @@ public class TicketController {
      * пользователем произойдет перенаправление на соответствующую веб
      * страницу с описанием ошибки.
      *
-     * @param model модель
+     * @param model   модель
      * @param request запрос пользователя
      * @return возвращает страницу информации о выполненной покупке
      */
@@ -88,14 +89,14 @@ public class TicketController {
      * Обрабатывает POST запрос, удаляет проданные билеты и перенаправляет на страницу
      * списка сеансов для администратора.
      *
-     * @param showId модель
-     * @param model модель
+     * @param showId  модель
+     * @param model   модель
      * @param request запрос пользователя
      * @return возвращает страницу информации о выполненной покупке
      */
     @PostMapping("/clearTickets")
     public String clearTickets(@RequestParam(value = "showId") int showId,
-            Model model, HttpServletRequest request) {
+                               Model model, HttpServletRequest request) {
         ticketService.deleteTicketsByShowId(showId);
         model.addAttribute("user", UserUtil.getSessionUser(request));
         return "redirect:/adminShows";

@@ -4,6 +4,7 @@ import lombok.*;
 
 /**
  * Модель данных сеансы
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */

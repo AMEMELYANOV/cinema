@@ -18,9 +18,10 @@ import java.util.Optional;
 
 /**
  * Реализация хранилища билетов
- * @see ru.job4j.cinema.model.Ticket
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.model.Ticket
  */
 @Slf4j
 @AllArgsConstructor
@@ -86,15 +87,15 @@ public class JdbcTicketRepository implements TicketRepository {
      * SQL запрос по удалению билетов из таблицы tickets с фильтром по id ticket
      */
     private static final String DELETE_BY_TICKET_ID = """
-    DELETE FROM tickets WHERE id = ?
-    """;
+            DELETE FROM tickets WHERE id = ?
+            """;
 
     /**
      * SQL запрос по удалению билетов из таблицы tickets с фильтром по id show
      */
     private static final String DELETE_BY_SHOW_ID = """
-    DELETE FROM tickets WHERE show_id = ?
-    """;
+            DELETE FROM tickets WHERE show_id = ?
+            """;
 
     /**
      * Объект для выполнения подключения к базе данных приложения

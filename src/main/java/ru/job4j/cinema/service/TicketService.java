@@ -6,9 +6,10 @@ import java.util.List;
 
 /**
  * Сервис билетов, логика работы с билетами
- * @see ru.job4j.cinema.model.Ticket
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.model.Ticket
  */
 public interface TicketService {
 

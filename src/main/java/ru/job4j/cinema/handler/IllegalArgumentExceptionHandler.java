@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Глобальный обработчик исключений
- * @see IllegalArgumentException
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see IllegalArgumentException
  */
 @Slf4j
 @ControllerAdvice
@@ -23,7 +24,7 @@ public class IllegalArgumentExceptionHandler {
      * IllegalArgumentException, в случае перехвата, направляет информацию
      * об исключении на соответствующую веб страницу.
      *
-     * @param e перехваченное исключение
+     * @param e       перехваченное исключение
      * @param request запрос пользователя
      * @return модель для передачи данных об исключении на веб страницу
      */

@@ -2,8 +2,6 @@ package ru.job4j.cinema.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.repository.JdbcShowRepository;
@@ -16,13 +14,15 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.doReturn;
 
 /**
  * Тест класс реализации сервисного слоя пользователей
- * @see JdbcShowRepository
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see JdbcShowRepository
  */
 class ImplUserServiceTest {
 

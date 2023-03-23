@@ -16,9 +16,10 @@ import java.util.Optional;
 
 /**
  * Реализация хранилища сеансов
- * @see ru.job4j.cinema.repository.ShowRepository
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.repository.ShowRepository
  */
 @Slf4j
 @AllArgsConstructor

@@ -12,6 +12,7 @@ import java.util.Set;
 
 /**
  * Сервлетный фильтр
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */
@@ -31,10 +32,10 @@ public class AuthFilter implements Filter {
      * на страницу с формами для входа пользователя. Если пользователь в сессии
      * присутствует, выполняется передача управления следующему в цепочке фильтру.
      *
-     * @param request запрос пользователя
+     * @param request  запрос пользователя
      * @param response ответ пользователю
-     * @param chain цепочка фильтров
-     * @throws IOException может выбрасывать исключение ввода вывода
+     * @param chain    цепочка фильтров
+     * @throws IOException      может выбрасывать исключение ввода вывода
      * @throws ServletException может выбрасывать исключение ввода вывода
      */
     @Override

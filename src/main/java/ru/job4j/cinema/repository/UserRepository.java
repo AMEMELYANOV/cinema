@@ -7,9 +7,10 @@ import java.util.Optional;
 
 /**
  * Хранилище пользователей
- * @see ru.job4j.cinema.model.User
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.model.User
  */
 public interface UserRepository {
 

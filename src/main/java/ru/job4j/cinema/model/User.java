@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 
 /**
  * Модель данных пользователи
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */

@@ -3,13 +3,13 @@ package ru.job4j.cinema.service;
 import ru.job4j.cinema.model.User;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Сервис пользователей, логика работы с пользователями
- * @see ru.job4j.cinema.model.User
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.model.User
  */
 public interface UserService {
 

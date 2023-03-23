@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Контроллер для стартовой страницы приложения
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */

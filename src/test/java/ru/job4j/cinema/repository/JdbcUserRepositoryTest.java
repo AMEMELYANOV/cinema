@@ -16,6 +16,14 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
+/**
+ * Тест класс реализации хранилища пользователей
+ *
+ * @author Alexander Emelyanov
+ * @version 1.0
+ * @see JdbcUserRepository
+ */
 class JdbcUserRepositoryTest {
 
     /**

@@ -14,9 +14,10 @@ import static org.mockito.Mockito.*;
 
 /**
  * Тест класс реализации контроллеров
- * @see ru.job4j.cinema.controller.LoginController
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.controller.LoginController
  */
 class LoginControllerTest {
 

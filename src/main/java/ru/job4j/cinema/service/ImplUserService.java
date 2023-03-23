@@ -10,9 +10,10 @@ import java.util.NoSuchElementException;
 
 /**
  * Реализация сервиса по работе с пользователями
- * @see ru.job4j.cinema.service.UserService
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.service.UserService
  */
 @AllArgsConstructor
 @Service
@@ -39,7 +40,7 @@ public class ImplUserService implements UserService {
      *
      * @param id идентификатор пользователя
      * @return пользователя при успешном нахождении
-     * @exception NoSuchElementException, если пользователь не найден
+     * @throws NoSuchElementException если пользователь не найден
      */
     @Override
     public User findById(int id) {
@@ -54,7 +55,7 @@ public class ImplUserService implements UserService {
      *
      * @param user сохраняемый пользователь
      * @return пользователя при успешном сохранении
-     * @exception IllegalArgumentException, если сохранение пользователя не произошло
+     * @throws IllegalArgumentException если сохранение пользователя не произошло
      */
     @Override
     public User save(User user) {
@@ -66,7 +67,7 @@ public class ImplUserService implements UserService {
      * Выполняет обновление пользователя.
      *
      * @param user обновляемый пользователь
-     * @exception NoSuchElementException, если пользователь не найден
+     * @throws NoSuchElementException если пользователь не найден
      */
     @Override
     public boolean update(User user) {
@@ -83,7 +84,7 @@ public class ImplUserService implements UserService {
      *
      * @param id идентификатор пользователя
      * @return true при успешном удалении
-     * @exception NoSuchElementException, если пользователь не найден
+     * @throws NoSuchElementException если пользователь не найден
      */
     @Override
     public boolean deleteById(int id) {
@@ -100,7 +101,7 @@ public class ImplUserService implements UserService {
      *
      * @param email почтовый адрес пользователя
      * @return пользователя при успешном нахождении
-     * @exception NoSuchElementException, если пользователь не найден
+     * @throws NoSuchElementException если пользователь не найден
      */
     @Override
     public User findUserByEmail(String email) {
@@ -118,7 +119,7 @@ public class ImplUserService implements UserService {
      *
      * @param user пользователя
      * @return пользователя при успешном при совпадении пароля и почтового адреса
-     * @exception IllegalArgumentException, если пароли пользователя не совпали
+     * @throws IllegalArgumentException если пароли пользователя не совпали
      */
     @Override
     public User validateUserLogin(User user) {
@@ -135,7 +136,7 @@ public class ImplUserService implements UserService {
      *
      * @param phone номер телефона пользователя
      * @return пользователя при успешном нахождении
-     * @exception NoSuchElementException, если пользователь не найден
+     * @throws NoSuchElementException если пользователь не найден
      */
     @Override
     public User findUserByPhone(String phone) {

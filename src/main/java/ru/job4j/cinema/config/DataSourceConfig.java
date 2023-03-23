@@ -10,6 +10,7 @@ import java.util.Properties;
 
 /**
  * Конфигурация источника данных
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */

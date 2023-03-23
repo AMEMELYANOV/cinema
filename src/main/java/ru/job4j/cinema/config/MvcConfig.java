@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Веб конфигурация для работы с изображениями
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */

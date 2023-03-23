@@ -16,9 +16,10 @@ import java.util.Optional;
 
 /**
  * Реализация хранилища пользователей
- * @see ru.job4j.cinema.model.User
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.model.User
  */
 @Slf4j
 @AllArgsConstructor

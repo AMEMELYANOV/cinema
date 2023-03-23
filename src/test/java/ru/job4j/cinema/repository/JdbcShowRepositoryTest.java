@@ -18,9 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Тест класс реализации хранилища сеансов
- * @see JdbcShowRepository
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see JdbcShowRepository
  */
 class JdbcShowRepositoryTest {
 

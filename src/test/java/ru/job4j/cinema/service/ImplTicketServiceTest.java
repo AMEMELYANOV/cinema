@@ -2,8 +2,6 @@ package ru.job4j.cinema.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import ru.job4j.cinema.model.Show;
 import ru.job4j.cinema.model.Ticket;
@@ -23,9 +21,10 @@ import static org.mockito.Mockito.doReturn;
 
 /**
  * Тест класс реализации сервисного слоя билетов
- * @see JdbcShowRepository
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see JdbcShowRepository
  */
 class ImplTicketServiceTest {
 

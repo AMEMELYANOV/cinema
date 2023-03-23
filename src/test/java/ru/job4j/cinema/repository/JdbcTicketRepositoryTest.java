@@ -18,6 +18,14 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+
+/**
+ * Тест класс реализации хранилища билетов
+ *
+ * @author Alexander Emelyanov
+ * @version 1.0
+ * @see JdbcTicketRepository
+ */
 class JdbcTicketRepositoryTest {
 
     /**

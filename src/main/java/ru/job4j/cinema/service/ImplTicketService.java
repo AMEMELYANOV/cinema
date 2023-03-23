@@ -11,9 +11,10 @@ import java.util.Optional;
 
 /**
  * Реализация сервиса по работе с билета
- * @see ru.job4j.cinema.service.TicketService
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.service.TicketService
  */
 @AllArgsConstructor
 @Service
@@ -40,7 +41,7 @@ public class ImplTicketService implements TicketService {
      *
      * @param id идентификатор билета
      * @return билет при успешном нахождении
-     * @exception NoSuchElementException, если билет не найден
+     * @throws NoSuchElementException если билет не найден
      */
     @Override
     public Ticket findById(int id) {
@@ -55,7 +56,7 @@ public class ImplTicketService implements TicketService {
      *
      * @param ticket сохраняемый билет
      * @return билет при успешном сохранении
-     * @exception IllegalArgumentException, если сохранение билета не произошло
+     * @throws IllegalArgumentException если сохранение билета не произошло
      */
     @Override
     public Ticket save(Ticket ticket) {
@@ -67,7 +68,7 @@ public class ImplTicketService implements TicketService {
      * Выполняет обновление билета.
      *
      * @param ticket обновляемый билет
-     * @exception NoSuchElementException, если билет не найден
+     * @throws NoSuchElementException если билет не найден
      */
     @Override
     public boolean update(Ticket ticket) {
@@ -84,7 +85,7 @@ public class ImplTicketService implements TicketService {
      *
      * @param id идентификатор билета
      * @return true при успешном удалении
-     * @exception NoSuchElementException, если билет не найден
+     * @throws NoSuchElementException если билет не найден
      */
     @Override
     public boolean deleteById(int id) {
@@ -101,7 +102,7 @@ public class ImplTicketService implements TicketService {
      *
      * @param id идентификатор сеанса
      * @return true при успешном удалении
-     * @exception NoSuchElementException, если билет не найден
+     * @throws NoSuchElementException если билет не найден
      */
     @Override
     public boolean deleteTicketsByShowId(int id) {

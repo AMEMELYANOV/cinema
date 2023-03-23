@@ -2,8 +2,6 @@ package ru.job4j.cinema.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockMultipartFile;
 import ru.job4j.cinema.model.Show;
@@ -19,9 +17,10 @@ import static org.mockito.Mockito.*;
 
 /**
  * Тест класс реализации сервисного слоя сеансов
- * @see JdbcShowRepository
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see JdbcShowRepository
  */
 class ImplShowServiceTest {
 
@@ -38,7 +37,7 @@ class ImplShowServiceTest {
     /**
      * Объект для доступа к методам TicketController
      */
-    private  ImplShowService showService;
+    private ImplShowService showService;
 
     /**
      * Сеанс

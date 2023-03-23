@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Тест класс реализации контроллеров
- * @see ru.job4j.cinema.controller.IndexController
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.controller.IndexController
  */
 class IndexControllerTest {
 
@@ -31,7 +32,7 @@ class IndexControllerTest {
      */
     @Test
     void getIndex() {
-        String result  = indexController.index();
+        String result = indexController.index();
 
         Assertions.assertThat(result).isEqualTo("index");
     }

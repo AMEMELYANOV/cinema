@@ -4,13 +4,13 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.cinema.model.Show;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Сервис сеансов, логика работы с сеансами
- * @see ru.job4j.cinema.model.Show
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see ru.job4j.cinema.model.Show
  */
 public interface ShowService {
 
@@ -87,7 +87,7 @@ public interface ShowService {
      * идентификаторам сеанса и номеру ряда.
      * Возвращает список свободных мест в ряде.
      *
-     * @param id идентификатор сеанса
+     * @param id     идентификатор сеанса
      * @param posRow номер ряда
      * @return {@code List<Integer>} - список свободных мест в ряде
      */

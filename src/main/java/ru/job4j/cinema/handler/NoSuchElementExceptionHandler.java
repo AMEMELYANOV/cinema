@@ -11,9 +11,10 @@ import java.util.NoSuchElementException;
 
 /**
  * Глобальный обработчик исключений
- * @see NoSuchElementException
+ *
  * @author Alexander Emelyanov
  * @version 1.0
+ * @see NoSuchElementException
  */
 @Slf4j
 @ControllerAdvice
@@ -24,7 +25,7 @@ public class NoSuchElementExceptionHandler {
      * NoSuchElementException, в случае перехвата, направляет информацию
      * об исключении на соответствующую веб страницу.
      *
-     * @param e перехваченное исключение
+     * @param e       перехваченное исключение
      * @param request запрос пользователя
      * @return модель для передачи данных об исключении на веб страницу
      */

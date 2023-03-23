@@ -4,6 +4,7 @@ import lombok.*;
 
 /**
  * Модель данных билеты
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */

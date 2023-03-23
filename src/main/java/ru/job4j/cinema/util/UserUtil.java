@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Утилитный класс для извлечения пользователя и сессии
+ *
  * @author Alexander Emelyanov
  * @version 1.0
  */
@@ -14,7 +15,7 @@ public final class UserUtil {
     /**
      * Приватный конструктор класса для исключения наследования.
      *
-     *@exception AssertionError выбрасывается при попытке вызвать конструктор
+     * @throws AssertionError выбрасывается при попытке вызвать конструктор
      */
     private UserUtil() {
         throw new AssertionError();
